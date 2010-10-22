@@ -13,7 +13,7 @@ class GravatarExtension extends Extension
         $loader->load('config.xml');
 
         $parameters = array();
-        foreach (array('size', 'rating', 'default') as $key) {
+        foreach (array('size', 'rating', 'default', 'format') as $key) {
             if (isset($config[$key])) {
                 $parameters[$key] = $config[$key];
             }

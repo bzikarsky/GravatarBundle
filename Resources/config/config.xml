@@ -10,11 +10,36 @@
     </parameters>
 
     <services>
+    
         <service id="gravatar.api" class="%gravatar.api.class%" />
-
+	
+		<service id="gravatar.http_client" class="\Zend\Http\Client" />
+	
+		<service id="gravatar.cache" class="Zend\Cache\Cache" constructor="factory">
+			<argument>Core<argument>
+			<argument>File</argument>
+			<argument type="collection">
+				<argument key="cache_id_prefix">gravatar</argument>
+			</argument>
+			<argument type="collection">
+				<argument key="cache_dir">%kernel.cache_dir%/gravatar</argument>
+			</argument>
+			<argument>false</argument>
+			<argument>true</argument>
+		</service>
+		
         <service id="templating.helper.gravatar" class="%templating.helper.gravatar.class%">
             <tag name="templating.helper" alias="gravatar" />
             <argument type="service" id="gravatar.api" />
+            
+            <call method="setHttpClient">
+				<argument type="service" id="gravatar.http_client" />
+            </call>
+            
+            <call method="setCache">
+				<argument type="service" id="gravatar.cache.frontend" />
+            </call>
         </service>
+        
     </services>
 </container>

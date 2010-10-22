@@ -10,6 +10,7 @@ use Bundle\GravatarBundle\GravatarApi;
  *
  * @author Thibault Duplessis
  * @author Henrik Bjornskov <henrik@bearwoods.dk>
+ * @author     Benjamin Zikarsky <benjamin@zikarsky.de>
  */
 class GravatarHelper implements HelperInterface
 {
@@ -43,9 +44,24 @@ class GravatarHelper implements HelperInterface
      * @param  string  $default
      * @return string
      */
+    public function getThumbnailUrl($email, $size = null, $rating = null, $default = null)
+    {
+        return $this->api->getThumbnailUrl($email, $size, $rating, $default);
+    }
+    
+    /**
+     * Returns a url for a gravatar. Deprecated in favour of getThumbnailUrl
+     *
+     * @deprecated
+     * @param  string  $email
+     * @param  integer $size
+     * @param  string  $rating
+     * @param  string  $default
+     * @return string
+     */
     public function getUrl($email, $size = null, $rating = null, $default = null)
     {
-        return $this->api->getUrl($email, $size, $rating, $default);
+        return $this->api->getThumbnailUrl($email, $size, $rating, $default);
     }
 
     /**
@@ -57,6 +73,19 @@ class GravatarHelper implements HelperInterface
     public function exists($email)
     {
         return $this->api->exists($email);
+    }
+    
+    /**
+     * Returns an url for a gravatar profile
+     *
+     * @param  string $email
+     * @param  string $format
+     * @param  array  $params (optional)
+     * @return string
+     */
+    public function getProfileUrl($email, $format = null, array $params = array())
+    {
+		return $this->api->getProfileUrl($email, $format, $params);
     }
 
     /**
